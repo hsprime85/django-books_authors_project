@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style_book.css' %}">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="container">
+        <h2>{{ book.title }}</h2>
+        <p>ID: {{ book.id }}</p>
+        <p>Description : </p>
+        <p>{{ book.describe }}</p>
+
+        <p>Authors</p>
+        <ul>
+            {% for author in book.authors.all %}
+            <li>{{ author.first_name}} {{ author.last_name }}</li>
+            {% endfor %}
+        </ul>
+
+        <form action="/authors/create" method="post">
+            {% csrf_token %}
+            <p><select name="authors">
+                    <option value="default" disabled selected hidden>-select an author-</option>
+                    {% for author in all_authors %}
+                    <option value="{{ author.id }}">{{ author.first_name }} {{ author.last_name }}</option>
+                    {% endfor %}
+                </select>
+            </p>
+            <button type="submit">ADD</button>
+        </form>
+    </div>
+
+
+</html>
